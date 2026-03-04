@@ -13,10 +13,25 @@ public class SwiftContactsServicePlugin: NSObject, FlutterPlugin, CNContactViewC
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "github.com/clovisnicolas/flutter_contacts", binaryMessenger: registrar.messenger())
-        let rootViewController = UIApplication.shared.delegate!.window!!.rootViewController!;
+        let rootViewController = SwiftContactsServicePlugin.getRootViewController()
         let instance = SwiftContactsServicePlugin(rootViewController)
         registrar.addMethodCallDelegate(instance, channel: channel)
         instance.preLoadContactView()
+    }
+
+    private static func getRootViewController() -> UIViewController {
+        if #available(iOS 13.0, *) {
+            if let scene = UIApplication.shared.connectedScenes
+                .filter({ $0.activationState == .foregroundActive })
+                .first as? UIWindowScene,
+               let rootViewController = scene.windows.first?.rootViewController {
+                return rootViewController
+            }
+        }
+        if let rootViewController = UIApplication.shared.delegate?.window??.rootViewController {
+            return rootViewController
+        }
+        return UIViewController()
     }
 
     init(_ rootViewController: UIViewController) {

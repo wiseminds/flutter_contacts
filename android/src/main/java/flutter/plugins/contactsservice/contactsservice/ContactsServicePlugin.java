@@ -70,11 +70,11 @@ public class ContactsServicePlugin implements MethodCallHandler, FlutterPlugin, 
   //   this.delegate = new ContactServiceDelegateOld(registrar);
   // }
 
-  public static void registerWith(Registrar registrar) {
-    ContactsServicePlugin instance = new ContactsServicePlugin();
-    instance.initInstance(registrar.messenger(), registrar.context());
-    // instance.initDelegateWithRegister(registrar);
-  }
+  // public static void registerWith(Registrar registrar) {
+  //   ContactsServicePlugin instance = new ContactsServicePlugin();
+  //   instance.initInstance(registrar.messenger(), registrar.context());
+  //   // instance.initDelegateWithRegister(registrar);
+  // }
 
   private void initInstance(BinaryMessenger messenger, Context context) {
     methodChannel = new MethodChannel(messenger, "github.com/clovisnicolas/flutter_contacts");
